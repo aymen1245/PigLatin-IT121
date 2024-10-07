@@ -1,1 +1,1 @@
-# PigLatintranslator1
+# PigLatinTranslator
