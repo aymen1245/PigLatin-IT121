@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pig Latin Translator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        input, button {
+            padding: 10px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pig Latin Translator</h1>
+    <input type="text" id="inputText" placeholder="Enter text here" />
+    <button id="translateButton">Translate to Pig Latin</button>
+    <h2 id="output"></h2>
+
+    <script>
+        
+        //  Author: Aymen
+        // Date: 1998-03-11
+        // This program translates input text into Pig Latin based on specified rules:
+        // 1. Words starting with vowels append 'way'.
+        // 2. Words starting with one consonant move the consonant to the end and append 'ay'.
+        // 3. Words starting with two consonants move both to the end and append 'ay'.
+        // 4. Prints a warning if no input is provided.
+        
+
+        function pigLatinTranslator(input) {
+            if (!input || input.length < 2) {
+                return "Input can't be translated.";
+            }
+
+            const words = input.split(' ');
+            const pigLatinWords = words.map(word => {
+                const lowerWord = word.toLowerCase();
+                const firstChar = lowerWord.charAt(0);
+                const secondChar = lowerWord.charAt(1);
+
+                if ('aeiou'.includes(firstChar)) {
+                    return word + 'way';
+                } else if (firstChar.match(/[b-df-hj-np-tv-z]/) && secondChar === undefined) {
+                    return word.slice(1) + firstChar + 'ay';
+                } else if (firstChar.match(/[b-df-hj-np-tv-z]/) && secondChar.match(/[b-df-hj-np-tv-z]/)) {
+                    return word.slice(2) + firstChar + secondChar + 'ay';
+                }
+                return word;
+            });
+
+            return pigLatinWords.join(' ');
+        }
+
+        document.getElementById('translateButton').addEventListener('click', () => {
+            const input = document.getElementById('inputText').value;
+            const translated = pigLatinTranslator(input);
+            document.getElementById('output').innerText = translated;
+        });
+    </script>
+</body>
+</html>
